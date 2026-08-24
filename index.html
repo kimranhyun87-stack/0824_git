@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김영호 | 생성형 AI 크리에이터 & 디벨로퍼 포트폴리오</title>
+    <meta name="description" content="생성형 AI(이미지/영상 생성 및 편집) 기술을 활용하여 혁신적인 비주얼 콘텐츠를 만드는 김영호의 포트폴리오 사이트입니다.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="site-header">
+        <div class="container header-container">
+            <div class="header-inner">
+                <!-- Logo -->
+                <div class="logo-wrapper">
+                    <a href="#" class="logo-link">
+                        <span class="logo-text">Youngho.AI</span>
+                        <span class="logo-badge">PORTFOLIO</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Nav Menu -->
+                <nav class="desktop-nav">
+                    <a href="#gallery">갤러리</a>
+                    <a href="#skills">보유 기술</a>
+                    <a href="#projects">프로젝트</a>
+                    <a href="#learning">학습 이력</a>
+                    <a href="#feedback">피드백</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="mobile-menu-toggle">
+                    <button id="menu-btn" type="button" class="menu-btn" aria-label="메뉴 열기">
+                        <i class="fa-solid fa-bars" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="mobile-nav hidden">
+            <div class="mobile-nav-inner">
+                <a href="#gallery" class="mobile-nav-link">갤러리</a>
+                <a href="#skills" class="mobile-nav-link">보유 기술</a>
+                <a href="#projects" class="mobile-nav-link">프로젝트</a>
+                <a href="#learning" class="mobile-nav-link">학습 이력</a>
+                <a href="#feedback" class="mobile-nav-link">피드백</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <!-- Floating shapes background -->
+        <div class="hero-bg-shapes">
+            <div class="shape-purple pulse-slow"></div>
+            <div class="shape-brand float-anim"></div>
+        </div>
+
+        <div class="container hero-container">
+            <div class="hero-grid">
+                <!-- Left Content -->
+                <div class="hero-content">
+                    <div class="hero-badge-wrap">
+                        <span class="status-indicator">
+                            <span class="status-ping"></span>
+                            <span class="status-dot"></span>
+                        </span>
+                        <span>생성형 AI 컨텐츠 크리에이터 / 엔지니어 구직 중</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        상상을 프롬프트로,<br>
+                        <span class="text-gradient">비주얼 혁신을 현실로</span>
+                    </h1>
+
+                    <p class="hero-desc">
+                        안녕하세요, <strong>김영호</strong>입니다. 저는 최신 생성형 AI 모델(Stable Diffusion, Midjourney, Runway 등)을 활용하여
+                        고품질의 이미지와 영상을 기획, 생성, 편집하는 기술을 보유하고 있습니다. 단순한 생성을 넘어, 비즈니스 가치를 창출하는 맞춤형 비주얼 워크플로우를 설계합니다.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#gallery" class="btn-dark">
+                            포트폴리오 감상하기 <i class="fa-solid fa-arrow-right btn-icon-right"></i>
+                        </a>
+                        <a href="#skills" class="btn-outline">
+                            보유 기술 보기
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Prompt Sandbox Simulation -->
+                <div class="hero-sandbox">
+                    <div class="sandbox-card">
+                        <div class="sandbox-header">
+                            <div class="window-controls">
+                                <span class="control red"></span>
+                                <span class="control yellow"></span>
+                                <span class="control green"></span>
+                            </div>
+                            <span class="sandbox-title">youngho-ai-generator.sh</span>
+                        </div>
+
+                        <div class="sandbox-body">
+                            <div class="sandbox-comment">// AI 이미지 생성 워크플로우 실행 중...</div>
+                            <div class="sandbox-prompt-line" style="min-height: 4rem;">
+                                <span class="prompt-sign">$</span>
+                                <span id="typing-prompt" class="typing-cursor"></span>
+                            </div>
+
+                            <div class="sandbox-render-area">
+                                <div id="gen-placeholder" class="render-placeholder">
+                                    <i class="fa-solid fa-wand-magic-sparkles icon-bounce"></i>
+                                    <div class="placeholder-text">프롬프트 입력 대기 중...</div>
+                                </div>
+                                <div id="gen-loader" class="render-loader hidden">
+                                    <div class="spinner"></div>
+                                    <div class="loader-text">이미지 렌더링 중 (84%)...</div>
+                                </div>
+                                <img id="gen-image" src="" alt="생성형 AI 컨셉" class="render-image hidden">
+                                <div id="gen-badge" class="render-badge hidden">
+                                    Prompt-to-Image
+                                </div>
+                            </div>
+
+                            <div style="min-height: 1.5rem;">
+                                <div id="gen-status" class="render-status hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image/Video Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-subtitle">AI 생성 및 편집 갤러리</h2>
+                <p class="section-title">AI로 직조해낸 결과물들</p>
+                <div class="section-divider"></div>
+                <p class="section-desc">프롬프트 엔지니어링, 스타일 변환, 3D 리라이팅 등을 활용하여 생성한 고해상도 예술 및 비주얼 에셋 모음입니다.</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">전체</button>
+                <button class="filter-btn" data-filter="image">이미지 생성</button>
+                <button class="filter-btn" data-filter="video">영상 생성 및 업스케일</button>
+                <button class="filter-btn" data-filter="edit">정밀 편집/합성</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Item 1 -->
+                <div class="gallery-item" data-category="image">
+                    <div class="gallery-img-wrap">
+                        <img src="images/cyberpunk_city.png" alt="사이버 펑크 시티" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">Stable Diffusion XL</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">이미지 생성</span>
+                            <span class="meta-stats">Steps: 40 | CFG: 7</span>
+                        </div>
+                        <h3 class="gallery-title">사이버 펑크 시티</h3>
+                        <p class="gallery-desc">네온 불빛과 홀로그램이 화려하게 교차하는 초고층 미래 도시의 야경.</p>
+                        <button class="view-detail-btn" data-title="사이버 펑크 시티"
+                            data-desc="Stable Diffusion XL과 ControlNet을 활용하여 압도적인 스케일의 사이버펑크 메가시티 야경을 설계했습니다. 젖은 아스팔트 위의 네온 리플렉션과 홀로그램 빌보드의 입체감을 극대화했습니다."
+                            data-prompt="A breathtaking, highly detailed digital painting of a vibrant cyberpunk city at night. Towering skyscrapers covered in glowing neon signs, flying cars, rain-slicked streets reflecting colorful lights. High-tech, futuristic aesthetic, cinematic lighting, 8k resolution."
+                            data-tools="Stable Diffusion XL, ControlNet, Photoshop"
+                            data-img="images/cyberpunk_city.png">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="gallery-item" data-category="image">
+                    <div class="gallery-img-wrap">
+                        <img src="images/clockwork_workshop.png" alt="태엽 감는 장인의 공방" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">Midjourney v6</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">이미지 생성</span>
+                            <span class="meta-stats">Aspect: 16:9</span>
+                        </div>
+                        <h3 class="gallery-title">태엽 감는 장인의 공방</h3>
+                        <p class="gallery-desc">아늑하고 클래식한 공방에서 정밀한 태엽과 톱니바퀴를 수리하는 장인의 손길.</p>
+                        <button class="view-detail-btn" data-title="태엽 감는 장인의 공방"
+                            data-desc="Midjourney v6를 활용하여 따뜻한 앰버 톤의 조명과 앤틱한 시계 부품들이 가득한 아날로그 공방을 연출했습니다. 돋보기를 낀 장인의 섬세한 표정과 황동 톱니바퀴의 정밀한 디테일을 살렸습니다."
+                            data-prompt="A warm, intricately detailed digital illustration of a clockwork artisan's workshop. Filled with gears, brass instruments, ticking clocks, and golden magical light shining through a dusty window. Steampunk aesthetic, highly detailed, fantasy concept art."
+                            data-tools="Midjourney v6, Lightroom" data-img="images/clockwork_workshop.png">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="gallery-item" data-category="video">
+                    <!-- [초보자용 주석] 파사드(Facade) 패턴 적용: 실제 유튜브 플레이어(무거움)를 로딩하지 않고, 가짜 썸네일 이미지와 재생 버튼만 껍데기로 보여줍니다. 클릭 시 'data-youtube-id' 속성에 있는 주소값을 자바스크립트가 가져와서 모달창에 진짜 영상을 생성하게 됩니다. -->
+                    <div class="gallery-img-wrap video-placeholder" data-youtube-id="ScMzIvxBSi4">
+                        <img src="https://img.youtube.com/vi/ScMzIvxBSi4/hqdefault.jpg" alt="비디오 업스케일 및 무빙"
+                            class="gallery-img">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">Runway Gen-3 Alpha</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">영상 생성/업스케일</span>
+                            <span class="meta-stats">Frame Rate: 60fps</span>
+                        </div>
+                        <h3 class="gallery-title">심해의 홀로그램 고래</h3>
+                        <p class="gallery-desc">정적 일러스트를 기반으로 깊은 바닷속을 헤엄치는 거대한 디지털 광섬유 고래 영상화.</p>
+                        <button class="view-detail-btn" data-title="심해의 홀로그램 고래 영상"
+                            data-desc="이 영상은 Runway Gen-3 모델을 활용하여 생성된 결과물입니다. 초기 2D 이미지를 기반으로 부드러운 해저의 물결과 빛의 산란을 사실적으로 표현하도록 모션을 부여하였으며, Topaz Video AI를 통해 모션 블러를 최소화하고 4K 60fps 해상도로 업스케일링하여 생동감을 극대화했습니다."
+                            data-prompt="Glowing majestic bioluminescent cybernetic whale swimming through a deep ocean trench, futuristic hologram, smooth fluid motion, cinematic shot"
+                            data-tools="Runway Gen-3, Topaz Video AI, Premiere Pro"
+                            data-img="https://img.youtube.com/vi/ScMzIvxBSi4/hqdefault.jpg">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="gallery-item" data-category="video">
+                    <!-- 파사드 패턴 적용: 가짜 유튜브 플레이어 (클릭 시 모달 열림) -->
+                    <div class="gallery-img-wrap video-placeholder" data-youtube-id="LXb3EKWsInQ">
+                        <img src="https://img.youtube.com/vi/LXb3EKWsInQ/hqdefault.jpg" alt="우주 공간 무빙 비디오"
+                            class="gallery-img">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">Luma Dream Machine</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">영상 생성/업스케일</span>
+                            <span class="meta-stats">Length: 5s</span>
+                        </div>
+                        <h3 class="gallery-title">웜홀 오디세이 아웃트로</h3>
+                        <p class="gallery-desc">공상과학 다큐멘터리 엔딩 크레딧용으로 연출한 화려한 시공간 왜곡 무빙 영상.</p>
+                        <button class="view-detail-btn" data-title="웜홀 오디세이 아웃트로"
+                            data-desc="Luma Dream Machine의 카메라 패닝 기능을 활용하여 시공간으로 빨려 들어가는 듯한 3D 공간감을 구현한 우주 웜홀 영상입니다. 프롬프트와 키프레임을 통한 정밀한 카메라 제어로 다이내믹한 줌 인 효과를 연출했으며, 입자(Particle) 흩날림 효과를 더해 몰입감을 완성했습니다."
+                            data-prompt="Camera zooming fast into a cosmic wormhole, swirling stars, purple and gold light trails, high speed warping, photorealistic 8k"
+                            data-tools="Luma Dream Machine, After Effects"
+                            data-img="https://img.youtube.com/vi/LXb3EKWsInQ/hqdefault.jpg">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="gallery-item" data-category="edit">
+                    <!-- 파사드 패턴 적용: 가짜 유튜브 플레이어 (클릭 시 모달 열림) -->
+                    <div class="gallery-img-wrap video-placeholder" data-youtube-id="tO01J-M3g0U">
+                        <img src="https://img.youtube.com/vi/tO01J-M3g0U/hqdefault.jpg" alt="정밀 편집" class="gallery-img">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">SD Video Inpainting</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">정밀 편집/합성</span>
+                            <span class="meta-stats">Accuracy: High</span>
+                        </div>
+                        <h3 class="gallery-title">클래식 차량의 미래형 튜닝</h3>
+                        <p class="gallery-desc">실제 클래식 자동차 주행 영상을 영상 전용 인페인팅 기법으로 가공하여 사이버펑크 콘셉트로 변경.</p>
+                        <button class="view-detail-btn" data-title="클래식 차량의 미래형 튜닝"
+                            data-desc="안정적인 비디오 인페인팅(Video Inpainting) 기술을 사용하여 움직이는 주행 영상 속 차량의 휠과 후드 부분만 미래지향적 디자인으로 매끄럽게 교체한 영상입니다. 프레임 간의 일관성(Temporal Consistency)을 완벽하게 유지하여 튀는 현상(Flickering) 없이 합성해 냈습니다."
+                            data-prompt="Futuristic energy cell wheels on a moving vintage mustang, glowing cyan led lights, cybernetic engine visible on hood, seamless motion"
+                            data-tools="Stable Video Diffusion, Mocha Pro, ControlNet"
+                            data-img="https://img.youtube.com/vi/tO01J-M3g0U/hqdefault.jpg">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="gallery-item" data-category="edit">
+                    <!-- 파사드 패턴 적용: 가짜 유튜브 플레이어 (클릭 시 모달 열림) -->
+                    <div class="gallery-img-wrap video-placeholder" data-youtube-id="aqz-KE-bpKQ">
+                        <img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="정밀 캔버스 아웃페인팅 영상"
+                            class="gallery-img">
+                        <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        <div class="gallery-overlay">
+                            <span class="gallery-badge">Video Outpainting</span>
+                        </div>
+                    </div>
+                    <div class="gallery-content">
+                        <div class="gallery-meta">
+                            <span class="meta-category">정밀 편집/합성</span>
+                            <span class="meta-stats">Extend Ratio: 200%</span>
+                        </div>
+                        <h3 class="gallery-title">명화 대형 캔버스 영상화 프로젝트</h3>
+                        <p class="gallery-desc">고전 명화 고유의 유화 터치 스타일을 계승하여 확장함과 동시에 살아 숨쉬는 모션을 부여한 비디오 아트.</p>
+                        <button class="view-detail-btn" data-title="명화 대형 캔버스 영상화 프로젝트"
+                            data-desc="단순한 이미지 아웃페인팅(Outpainting)을 넘어, 영상 모델을 활용해 확장된 배경에 미세한 움직임을 더한 프로젝트입니다. 원본 유화의 거친 브러시 질감과 색채를 분석한 화풍 임베딩을 통해, 배경의 구름과 바람, 인물의 자연스러운 호흡 모션을 생성해 내어 정적인 예술 작품을 동적인 미디어 아트로 재탄생시켰습니다."
+                            data-prompt="Oil painting style, matching brush strokes of high renaissance art, continuous background landscape with gently moving clouds and subtle wind effects, high quality video animation"
+                            data-tools="Stable Video Diffusion, Outpainting, Premiere Pro"
+                            data-img="https://img.youtube.com/vi/C_8oA0q4l1w/hqdefault.jpg">
+                            상세 내역 보기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usable Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-subtitle">사용 가능 기술</h2>
+                <p class="section-title">AI & 테크니컬 역량</p>
+                <div class="section-divider"></div>
+                <p class="section-desc">아이디어를 결과물로 구현하기 위해 능숙하게 제어하고 활용하는 AI 툴 및 전통적 개발/편집 스택입니다.</p>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Skill Category 1 -->
+                <div class="skill-card">
+                    <div class="skill-icon-wrap violet">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="skill-title">이미지 생성 및 모델 튜닝</h3>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">Stable Diffusion (WebUI/ComfyUI)</span>
+                                <span class="skill-pct">90%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 90%"></div>
+                            </div>
+                            <p class="skill-note">Lora 제작, ControlNet 제어, ComfyUI 워크플로우 자동화 가능</p>
+                        </li>
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">Midjourney / DALL-E 3</span>
+                                <span class="skill-pct">95%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 95%"></div>
+                            </div>
+                            <p class="skill-note">상업적 톤앤매너 매칭 및 파라미터 기반 정밀 프롬프팅</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Skill Category 2 -->
+                <div class="skill-card">
+                    <div class="skill-icon-wrap blue">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <h3 class="skill-title">비디오 생성 및 후처리</h3>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">Runway Gen-3 / Luma Dream Machine</span>
+                                <span class="skill-pct">85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 85%"></div>
+                            </div>
+                            <p class="skill-note">카메라 카메라 무브먼트 제어, 일관된 캐릭터 모션 비디오 생성</p>
+                        </li>
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">Topaz Video AI (Upscale)</span>
+                                <span class="skill-pct">80%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 80%"></div>
+                            </div>
+                            <p class="skill-note">SD 비디오 노이즈 제거, 프레임 보간, 4K 초해상도 변환</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Skill Category 3 -->
+                <div class="skill-card">
+                    <div class="skill-icon-wrap emerald">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="skill-title">디자인 및 프론트엔드</h3>
+                    <ul class="skill-list">
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">Adobe Photoshop & Premiere Pro</span>
+                                <span class="skill-pct">85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 85%"></div>
+                            </div>
+                            <p class="skill-note">생성형 채우기 기능 연동, 프레임 정밀 컷 편집 및 자막 처리</p>
+                        </li>
+                        <li>
+                            <div class="skill-item-header">
+                                <span class="skill-name">HTML5 / CSS3 / Tailwind CSS / JS</span>
+                                <span class="skill-pct">75%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 75%"></div>
+                            </div>
+                            <p class="skill-note">포트폴리오 UI 웹 개발, API 연동 가벼운 대화형 기능 구현</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Participation History Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-subtitle">프로젝트 참여 이력</h2>
+                <p class="section-title">AI 비주얼 제작 실적</p>
+                <div class="section-divider"></div>
+                <p class="section-desc">생성형 AI 기술을 활용하여 상업적 목적이나 공모전, 오픈소스 환경에서 활약한 프로젝트들입니다.</p>
+            </div>
+
+            <div class="projects-list">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=600&q=80"
+                            alt="웹툰 에이전트 프로젝트" class="project-img">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta-wrap">
+                            <div class="project-tags">
+                                <span class="tag brand">참여 이력</span>
+                                <span class="tag gray">개발 기간: 3개월</span>
+                                <span class="tag-date">2026.02 - 2026.05</span>
+                            </div>
+                            <h3 class="project-title">생성형 AI 기반 웹툰 배경/채색 보조 시스템 구축</h3>
+                            <p class="project-desc">
+                                기존 웹툰 외주 제작 스튜디오의 병목 지점이었던 '밑색 채색'과 '배경 소스 제작' 단계를 Stable Diffusion ControlNet API 및 맞춤형
+                                Lora 학습 파이프라인을 구축해 자동화했습니다. 스튜디오 전용 고유 화풍을 고스란히 반영하여 생산성을 획기적으로 개선했습니다.
+                            </p>
+
+                            <div class="project-stats">
+                                <div class="stat-box">
+                                    <div class="stat-label">담당 역할</div>
+                                    <div class="stat-value">프롬프트 엔지니어링 / Lora 파인튜닝</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">적용 기술</div>
+                                    <div class="stat-value">SD WebUI, ControlNet, Python</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">주요 성과</div>
+                                    <div class="stat-value highlight-green">배경 제작 리드타임 50% 단축</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80"
+                            alt="단편 영화 프로젝트" class="project-img">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-meta-wrap">
+                            <div class="project-tags">
+                                <span class="tag indigo">자체 제작</span>
+                                <span class="tag gray">제작 기간: 2개월</span>
+                                <span class="tag-date">2025.10 - 2025.12</span>
+                            </div>
+                            <h3 class="project-title">AI 단편 SF 시네마틱 무비 "The Signal" 제작 및 감독</h3>
+                            <p class="project-desc">
+                                기획 단계의 스토리보드 작성부터 씬(Scene) 생성, 비디오 모션 생성 및 사운드 효과 삽입까지 100% 생성형 AI 툴로 구성된 워크플로우를 활용해 제작한
+                                3분 분량의 가상 영화입니다. Runway Gen-3를 적극 활용해 인물의 정밀한 시선 및 감정 흐름을 영상으로 연출해 냈습니다.
+                            </p>
+
+                            <div class="project-stats">
+                                <div class="stat-box">
+                                    <div class="stat-label">담당 역할</div>
+                                    <div class="stat-value">시나리오 작성, 비디오 생성, 편집</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">적용 기술</div>
+                                    <div class="stat-value">Midjourney, Runway Gen-3, After Effects</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">주요 성과</div>
+                                    <div class="stat-value highlight-green">AI 크리에이티브 영화제 우수상</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning History Section -->
+    <section id="learning" class="learning-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-subtitle">학습 이력</h2>
+                <p class="section-title">전문 역량 강화 과정</p>
+                <div class="section-divider"></div>
+                <p class="section-desc">기술 트렌드를 선도하기 위해 거쳐 온 학업 및 전문 교육 코스 내역입니다.</p>
+            </div>
+
+            <!-- Timeline Layout -->
+            <div class="timeline-container">
+                <!-- Center Line -->
+                <div class="timeline-line"></div>
+
+                <div class="timeline-items">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content-left">
+                            <div class="timeline-card">
+                                <span class="timeline-date">2025.07 - 2026.01</span>
+                                <h4 class="timeline-title">생성형 AI 멀티미디어 크리에이팅 부트캠프 수료</h4>
+                                <p class="timeline-desc">안정적인 이미지 생성 파이프라인(Stable Diffusion) 및 비디오 변환 솔루션을 활용한 상업용 비주얼
+                                    제작 실무 교육(480시간) 이수.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content-right empty"></div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content-left empty"></div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content-right">
+                            <div class="timeline-card">
+                                <span class="timeline-date">2024.11</span>
+                                <h4 class="timeline-title">TensorFlow Developer Certificate 취득</h4>
+                                <p class="timeline-desc">Google 공인 TensorFlow 개발자 자격을 취득하여 딥러닝 기반 이미지 및 순차 데이터 분류 모델의
+                                    이해도 입증.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content-left">
+                            <div class="timeline-card">
+                                <span class="timeline-date">2020.03 - 2024.02</span>
+                                <h4 class="timeline-title">한국 IT 미디어공학과 졸업</h4>
+                                <p class="timeline-desc">미디어 데이터 압축 및 시각 효과 전공. 전공 과정 중 컴퓨터 그래픽스 및 머신러닝 기초 과목 이수.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content-right empty"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Feedback & Opinions Section -->
+    <section id="feedback" class="feedback-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-subtitle">프로젝트에 대한 반응</h2>
+                <p class="section-title">클라이언트 및 팀원 피드백</p>
+                <div class="section-divider"></div>
+                <p class="section-desc">함께 협업한 기획자, 개발자, 클라이언트들이 남겨 준 성장의 증거들입니다.</p>
+            </div>
+
+            <div class="feedback-grid">
+                <!-- Feedback 1 -->
+                <div class="feedback-card">
+                    <div>
+                        <div class="feedback-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="feedback-quote">
+                            "웹툰 배경 소스 모델 구축 작업을 같이 진행했는데, 기존 스튜디오 어시스턴트 3명이 3일 동안 매달려야 했던 분량을 프롬프트 최적화를 통해 단 반나절 만에 원하는
+                            화풍으로 뽑아주셨습니다. 업무 효율이 폭발적으로 늘었습니다."
+                        </p>
+                    </div>
+                    <div class="feedback-author-box">
+                        <div class="author-avatar">박</div>
+                        <div>
+                            <div class="author-name">박은정 실장</div>
+                            <div class="author-role">웹툰 제작 스튜디오 디렉터</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback 2 -->
+                <div class="feedback-card">
+                    <div>
+                        <div class="feedback-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="feedback-quote">
+                            "AI 단편 영화의 영상 간 일관성(Consistency) 유지 기법이 무척 인상 깊었습니다. 보통 AI 영상은 프레임별로 울렁임 현상(Flicker)이 심해
+                            완성도가 떨어지기 십상인데 김영호 님은 특유의 워크플로우로 극장용 수준의 부드러움을 구현했습니다."
+                        </p>
+                    </div>
+                    <div class="feedback-author-box">
+                        <div class="author-avatar">이</div>
+                        <div>
+                            <div class="author-name">이정민 심사위원</div>
+                            <div class="author-role">AI 크리에이티브 협회 이사</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback 3 -->
+                <div class="feedback-card">
+                    <div>
+                        <div class="feedback-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="feedback-quote">
+                            "단순히 멋진 결과물을 만들어 내는 데 그치지 않고, 작업 가이드라인과 튜토리얼 문서를 상세하게 아카이빙해주셔서 프로젝트가 끝난 이후에도 팀 내부적으로 손쉽게 기술을
+                            내재화할 수 있었습니다."
+                        </p>
+                    </div>
+                    <div class="feedback-author-box">
+                        <div class="author-avatar">김</div>
+                        <div>
+                            <div class="author-name">김하늘 팀장</div>
+                            <div class="author-role">콘텐츠 스타트업 '상상력' PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">Youngho.AI</span>
+                <p class="footer-copyright">© 2026 김영호. All rights reserved. Created with Tailwind CSS & JavaScript.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#gallery">갤러리</a>
+                <a href="#skills">보유 기술</a>
+                <a href="#projects">프로젝트</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Details Lightbox Modal -->
+    <div id="details-modal" class="modal-wrapper hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="modal-inner">
+            <!-- Modal Background overlay -->
+            <div class="modal-overlay" aria-hidden="true" id="modal-overlay"></div>
+
+            <span class="modal-trick" aria-hidden="true">&#8203;</span>
+
+            <!-- Modal Box -->
+            <div class="modal-box">
+                <!-- Modal header/close -->
+                <div class="modal-close-wrap">
+                    <button id="close-modal-btn" class="modal-close-btn">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="modal-grid">
+                    <!-- Modal Media Preview -->
+                    <div class="modal-media">
+                        <img id="modal-img" src="" alt="" class="modal-img-tag">
+                    </div>
+
+                    <!-- Modal Details Panel -->
+                    <div class="modal-content">
+                        <div class="modal-info">
+                            <h3 id="modal-title-text" class="modal-title"></h3>
+                            <p id="modal-desc" class="modal-desc-text"></p>
+
+                            <!-- Prompt box -->
+                            <div class="modal-prompt-box">
+                                <div class="modal-prompt-label">사용한 AI 프롬프트</div>
+                                <code id="modal-prompt" class="modal-prompt-code"></code>
+                            </div>
+
+                            <!-- Tools badge row -->
+                            <div class="modal-tools-wrap">
+                                <div class="modal-tools-label">활용 툴 및 프레임워크</div>
+                                <div id="modal-tools-container" class="modal-tools-container"></div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="close-modal-footer-btn" class="modal-footer-btn">
+                                닫기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript File -->
+    <script src="main.js"></script>
+</body>
+
+</html>
